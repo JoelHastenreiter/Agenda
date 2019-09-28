@@ -23,7 +23,7 @@ function imprimirContacto(contacto, index) {
     addContacto.insertAdjacentHTML('beforeend',
         `<li class="contacto">
         <div class="actions">
-            <a><i onclick="eliminarContacto()" class="fa fa-trash"></i></a>
+            <a><i onclick="eliminarContacto(`+ index + `)" class="fa fa-trash"></i></a>
         </div>
         <i class="userIcon fa fa-user"></i>
         <h4 class="nombre">`+ contacto.nombre + `</h4>
@@ -54,33 +54,25 @@ function imprimirTodosLosContactos() {
     document.getElementById("contactos").innerHTML = "";
     contactos.forEach(imprimirContacto);
 }
-function validar() {
-    var nombre = document.getElementById("nombre").value;
-    var error = "";
-    if (nombre.length = "") {
-        error = error + " El nombre es obligatorio";
-        alert(error);
-        var node = document.createElement("LI");
-        var textnode = document.createTextNode("La contrasenia debe tener al menos 8 caracteres.\n");
-        node.appendChild(textnode);
-        document.getElementById("errores").appendChild(node);
-    } else {
-        return true;
-    }
-}
 function agregarContacto() {
     var nombre = document.getElementById("nombre").value;
     var empresa = document.getElementById("empresa").value;
     var email = document.getElementById("email").value;
     var telefono = document.getElementById("telefono").value;
+    var errores = document.getElementById("errores");
+
     var expresion = /\w+@\w+\.+[a-z]/;
     var error = "";
     var n = email.indexOf("@");
     if (!expresion.test(email)) {
         error = error + " El correo no es valido (correo@mail.com)\n";
+        document.getElementById("errores").innerHTML = "";
+        errores.insertAdjacentHTML('beforeend', `<li>` + error + `</li>`);
     }
     if (nombre.length == 0) {
-        error = error + " El nombre no es valido\n";
+        error = error + " El nombre es obligatorio\n";
+        document.getElementById("errores").innerHTML = "";
+        errores.insertAdjacentHTML('beforeend', `<li>` + error + `</li>`);
     }
     if (error == "") {
         contactos.push({ nombre: nombre, empresa: empresa, email: email, telefono: telefono });
@@ -90,7 +82,7 @@ function agregarContacto() {
     }
     else alert(error);
 }
-
+//function erroresUl() {}
 imprimirTodosLosContactos();
 function clearCampo() {
     document.getElementById("nombre").value = "";
