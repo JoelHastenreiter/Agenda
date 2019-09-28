@@ -18,7 +18,7 @@ function abrir() {
 function cerrar() {
     var modal = document.getElementById("modal").style.display = "none";
 }
-function imprimirContacto(contacto) {
+function imprimirContacto(contacto, index) {
     var addContacto = document.getElementById("contactos");
     addContacto.insertAdjacentHTML('beforeend',
         `<li class="contacto">
@@ -46,7 +46,6 @@ function imprimirContacto(contacto) {
 }
 
 function eliminarContacto(index) {
-    console.log("index");
     confirm("¿Estás seguro que deseas eliminar un contacto?");
     contactos.splice(index, 1);
     imprimirTodosLosContactos();
@@ -74,38 +73,28 @@ function agregarContacto() {
     var empresa = document.getElementById("empresa").value;
     var email = document.getElementById("email").value;
     var telefono = document.getElementById("telefono").value;
+    var expresion = /\w+@\w+\.+[a-z]/;
     var error = "";
-
-    if (nombre.length == 0) {
-
-        error = error + " El nombre no es valido\n";
-    }
-
-    if (empresa.length == 0) {
-
-        error = error + " La empresa no es valida\n";
-    }
-
     var n = email.indexOf("@");
-
-    if (n == -1) {
-
+    if (!expresion.test(email)) {
         error = error + " El correo no es valido (correo@mail.com)\n";
     }
-
-    if (telefono.length == 0) {
-
-        error = error + " El telefono no es valido\n";
+    if (nombre.length == 0) {
+        error = error + " El nombre no es valido\n";
     }
-
-
     if (error == "") {
-
         contactos.push({ nombre: nombre, empresa: empresa, email: email, telefono: telefono });
         cerrar();
         imprimirTodosLosContactos();
+        clearCampo();
     }
     else alert(error);
 }
 
 imprimirTodosLosContactos();
+function clearCampo() {
+    document.getElementById("nombre").value = "";
+    document.getElementById("empresa").value = "";
+    document.getElementById("email").value = "";
+    document.getElementById("telefono").value = "";
+}
