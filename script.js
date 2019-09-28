@@ -34,11 +34,11 @@ function imprimirContacto(contacto, index) {
             </div>
             <div class="dato">
                 <i class="fa fa-envelope"></i>
-                <a href="mailto:analopez@gmail.com">`+ contacto.email + `</a>
+                <a href="mailto:`+ contacto.email + `">` + contacto.email + `</a>
             </div>
             <div class="dato">
                 <i class="fa fa-phone"></i>
-                <a href="tel:55555555">`+ contacto.telefono + `</a>
+                <a href="tel:`+ contacto.telefono + `">` + contacto.telefono + `</a>
             </div>
         </div>
     </li>`
